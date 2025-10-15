@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+*.tmp
+.DS_Store
+app/.state.json
+app/.autosave.json
