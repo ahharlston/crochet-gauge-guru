@@ -56,6 +56,47 @@ div[data-testid="stCaptionContainer"] { color: #a0a4b8; }
 """
 st.markdown(DARK_CSS if dark_mode else LIGHT_CSS, unsafe_allow_html=True)
 
+# --- Strong input theming: readable in both light & dark ---
+if dark_mode:
+    st.markdown("""
+    <style>
+    /* text inputs, number inputs, date/time, select combobox */
+    input[type="text"], input[type="number"], input[type="search"],
+    .stTextInput input, .stNumberInput input,
+    .stDateInput input, .stTimeInput input,
+    .stSelectbox [role="combobox"], .stSelectbox input {
+      color: #e7e7ea !important;
+      background: #151821 !important;
+      border-color: #2a3150 !important;
+    }
+    /* dropdown & menu items */
+    .stSelectbox > div > div { color:#e7e7ea !important; background:#151821 !important; }
+    .stSelectbox ul[role="listbox"] li { color:#e7e7ea !important; background:#0f1115 !important; }
+    /* slider value bubble & labels */
+    .stSlider label, .stSlider span { color:#e7e7ea !important; }
+    /* placeholders */
+    input::placeholder { color:#a0a4b8 !important; opacity:1; }
+    </style>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <style>
+    input[type="text"], input[type="number"], input[type="search"],
+    .stTextInput input, .stNumberInput input,
+    .stDateInput input, .stTimeInput input,
+    .stSelectbox [role="combobox"], .stSelectbox input {
+      color: #222 !important;
+      background: #ffffff !important;
+      border-color: #e2e2e9 !important;
+    }
+    .stSelectbox > div > div { color:#222 !important; background:#ffffff !important; }
+    .stSelectbox ul[role="listbox"] li { color:#222 !important; background:#ffffff !important; }
+    .stSlider label, .stSlider span { color:#222 !important; }
+    input::placeholder { color:#666 !important; opacity:1; }
+    </style>
+    """, unsafe_allow_html=True)
+
+
 # --- fix input text visibility ---
 st.markdown("""
 <style>
