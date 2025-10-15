@@ -1,4 +1,4 @@
-# Path shim (works in Streamlit Cloud and locally)
+# Path shim (works in Streamlit Cloud, Codespaces, and locally)
 import sys, os
 APP_DIR = os.path.dirname(__file__)
 if APP_DIR not in sys.path: sys.path.insert(0, APP_DIR)
@@ -16,53 +16,87 @@ from app.calc.crochet import (
 st.set_page_config(page_title="🪡 Crochet Gauge Guru", layout="wide")
 st.title("🪡 Crochet Gauge Guru — calculators & pattern resizer")
 
-# ===== Appearance: Dark toggle =====
-# ---- Force DARK mode only ----
+# ---- FORCE DARK MODE: Fully themed Streamlit UI (fixes white input boxes) ----
 DARK_CSS = """
 <style>
-html, body, .block-container { background: #0f1115 !important; color: #e7e7ea !important; }
-[data-testid="stMetric"] {
-  background: #151821; border: 1px solid #23283b; border-radius: 16px;
-  padding: 12px 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.35);
+/* Global background + text */
+html, body, [class^="stApp"] {
+  background-color: #0f1115 !important;
+  color: #e7e7ea !important;
 }
-section[data-testid="stSidebar"] .stSidebarContent { background:#0c0e12; }
-section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 { color:#e7e7ea; }
-div[data-testid="stCaptionContainer"] { color: #a0a4b8; }
-.stButton>button {
-  border-radius: 999px !important; padding:.5rem .9rem;
-  background:#1c2030; color:#e7e7ea; border:1px solid #2a3150;
+
+/* Metrics, alerts, expanders */
+[data-testid="stMetric"], .stAlert, .stExpander {
+  background: #151821 !important;
+  border: 1px solid #23283b !important;
+  border-radius: 16px !important;
+  color: #e7e7ea !important;
 }
-.stTextInput>div>div>input, .stNumberInput input { background:#151821; color:#e7e7ea; }
-.stSelectbox > div > div, .stSlider > div { background:#151821; color:#e7e7ea; border-radius:10px !important; }
+
+/* Sidebar */
+section[data-testid="stSidebar"] .stSidebarContent {
+  background: #0c0e12 !important;
+  color: #e7e7ea !important;
+}
+
+/* Input boxes (text, number, date, time, select, multiselect) */
+input:not([type="range"]), textarea, select,
+.stTextInput input, .stNumberInput input,
+.stDateInput input, .stTimeInput input,
+.stSelectbox [role="combobox"], .stSelectbox input,
+.stMultiSelect [role="combobox"], .stMultiSelect input {
+  background-color: #151821 !important;
+  color: #e7e7ea !important;
+  border: 1px solid #2a3150 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+/* Dropdown menus */
+ul[role="listbox"], .stSelectbox ul, .stMultiSelect ul {
+  background-color: #151821 !important;
+  color: #e7e7ea !important;
+  border: 1px solid #2a3150 !important;
+}
+
+/* Buttons */
+.stButton > button {
+  background-color: #1c2030 !important;
+  color: #e7e7ea !important;
+  border: 1px solid #2a3150 !important;
+  border-radius: 999px !important;
+  padding: 0.5rem 1rem !important;
+  font-weight: 500;
+  cursor: pointer;
+}
+.stButton > button:hover {
+  background-color: #2b3250 !important;
+  border-color: #3a4370 !important;
+}
+
+/* Sliders */
+.stSlider > div[data-baseweb="slider"] { color: #e7e7ea !important; }
+.stSlider [role="slider"] { background-color: #7b5cff !important; }
+
+/* Labels & captions */
+label, .stMarkdown, .stCaption, .stSlider label, .stSlider span {
+  color: #e7e7ea !important;
+}
+
+/* Placeholders */
+input::placeholder, textarea::placeholder {
+  color: #a0a4b8 !important;
+  opacity: 1 !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 { color: #ffffff !important; }
+
+/* Dividers */
+hr, .stDivider { border-color: #2a3150 !important; }
 </style>
 """
 st.markdown(DARK_CSS, unsafe_allow_html=True)
-
-# Strong input theming (ensures readable text in all widgets)
-st.markdown("""
-<style>
-.stApp input:not([type="range"]), .stApp textarea,
-.stNumberInput input, .stTextInput input,
-.stDateInput input, .stTimeInput input,
-.stSelectbox [role="combobox"], .stSelectbox input,
-.stMultiSelect [role="combobox"] {
-  color: #e7e7ea !important;
-  background: #151821 !important;
-  border-color: #2a3150 !important;
-}
-.stSelectbox > div > div, .stMultiSelect > div > div {
-  color:#e7e7ea !important; background:#151821 !important; border-color:#2a3150 !important;
-}
-/* dropdown menu */
-.stSelectbox ul[role="listbox"] li, .stMultiSelect ul[role="listbox"] li {
-  color:#e7e7ea !important; background:#0f1115 !important;
-}
-/* labels & slider text */
-label, .stSlider label, .stSlider span { color:#e7e7ea !important; }
-/* placeholders */
-input::placeholder, textarea::placeholder { color:#a0a4b8 !important; opacity:1; }
-</style>
-""", unsafe_allow_html=True)
 
 # ---------- Sidebar: Gauge ----------
 st.sidebar.header("Gauge")
