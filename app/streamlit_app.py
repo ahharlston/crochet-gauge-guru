@@ -98,53 +98,13 @@ hr, .stDivider { border-color: #2a3150 !important; }
 """
 st.markdown(DARK_CSS, unsafe_allow_html=True)
 # --- Extra: force dark styling for metric cards & any leftover white blocks ---
+
 st.markdown("""
 <style>
-/* 1) Streamlit metric cards (all parts) */
-.stMetric,                                    /* legacy class */
-div[data-testid="stMetric"],                  /* current container */
-div[data-testid="stMetric"] * {               /* all children */
-  background-color: #151821 !important;
-  color: #e7e7ea !important;
-}
-div[data-testid="stMetric"] {
-  border: 1px solid #23283b !important;
-  border-radius: 16px !important;
-  padding: 12px 16px !important;
-  box-shadow: none !important;
-}
-div[data-testid="stMetricLabel"],
-div[data-testid="stMetricValue"],
-div[data-testid="stMetricDelta"] {
-  color: #e7e7ea !important;
-}
-
-/* 2) Kill “white card” wrappers some themes add around metrics/blocks */
-div[data-testid="stVerticalBlock"] > div,
-div[data-testid="stHorizontalBlock"] > div,
-section[aria-label] > div {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-/* 3) If Streamlit wraps metrics in a generic card, darken that too */
-div[class*="st-emotion-cache"][style*="background-color: rgb(255, 255, 255)"] {
-  background-color: #151821 !important;
-  color: #e7e7ea !important;
-  border: 1px solid #23283b !important;
-  border-radius: 16px !important;
-}
-
-/* 4) Also darken any dataframe/table/markdown “cards” just in case */
-[data-testid="stDataFrame"], [data-testid="stTable"], [data-testid="stMarkdownContainer"] {
-  background-color: #151821 !important;
-  color: #e7e7ea !important;
-  border: 1px solid #23283b !important;
-  border-radius: 12px !important;
-}
+/* hide built-in Streamlit theme menu */
+[data-testid="stToolbar"] [title="Settings"], [data-testid="stToolbarActions"] { display: none !important; }
 </style>
 """, unsafe_allow_html=True)
-
 
 # ---------- Sidebar: Gauge ----------
 st.sidebar.header("Gauge")
