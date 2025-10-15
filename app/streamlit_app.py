@@ -56,6 +56,28 @@ div[data-testid="stCaptionContainer"] { color: #a0a4b8; }
 """
 st.markdown(DARK_CSS if dark_mode else LIGHT_CSS, unsafe_allow_html=True)
 
+# --- fix input text visibility ---
+st.markdown("""
+<style>
+/* Light mode input text */
+[data-baseweb="input"] input,
+.stNumberInput input,
+.stTextInput input,
+.stSelectbox div[data-baseweb="select"] > div {
+  color: #222 !important;
+}
+
+/* Dark mode input text */
+html[data-theme="dark"] [data-baseweb="input"] input,
+html[data-theme="dark"] .stNumberInput input,
+html[data-theme="dark"] .stTextInput input,
+html[data-theme="dark"] .stSelectbox div[data-baseweb="select"] > div {
+  color: #e7e7ea !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 # ---------- Sidebar: Gauge ----------
 st.sidebar.header("Gauge")
 units = st.sidebar.radio("Units", ["imperial (in)", "metric (cm)"], horizontal=True)
