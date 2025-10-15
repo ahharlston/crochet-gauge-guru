@@ -1,0 +1,16 @@
+crochet-gauge-guru/
+├─ app/
+│  ├─ calc/
+│  │  └─ crochet.py
+│  └─ streamlit_app.py
+├─ .streamlit/
+│  └─ config.toml
+├─ .github/
+│  └─ workflows/
+│     └─ ci.yml
+├─ .devcontainer/
+│  └─ devcontainer.json
+├─ .gitignore
+├─ requirements.txt
+├─ LICENSE
+└─ README.md
