@@ -16,26 +16,8 @@ from app.calc.crochet import (
 st.set_page_config(page_title="🪡 Crochet Gauge Guru", layout="wide")
 st.title("🪡 Crochet Gauge Guru — calculators & pattern resizer")
 
-# ===== Appearance: Light/Dark toggle (CSS) =====
-with st.sidebar.expander("Appearance", expanded=False):
-    dark_mode = st.checkbox("Dark mode", value=False)
-
-LIGHT_CSS = """
-<style>
-.block-container { padding-top: 1rem; padding-bottom: 2rem; }
-[data-testid="stMetric"] {
-  background: #fff; border: 1px solid #ececf4; border-radius: 16px;
-  padding: 12px 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-}
-section[data-testid="stSidebar"] .stSidebarContent { padding-top: .75rem; }
-div[data-testid="stCaptionContainer"] { color: #666; font-size: 0.85rem; }
-.stButton>button { border-radius: 999px !important; padding: 0.5rem 0.9rem; }
-.stTextInput>div>div>input, .stNumberInput input,
-.stSelectbox > div > div, .stSlider > div { border-radius: 10px !important; }
-h3 { margin-top: 0.5rem; }
-</style>
-"""
-
+# ===== Appearance: Dark toggle =====
+# ---- Force DARK mode only ----
 DARK_CSS = """
 <style>
 html, body, .block-container { background: #0f1115 !important; color: #e7e7ea !important; }
@@ -54,7 +36,33 @@ div[data-testid="stCaptionContainer"] { color: #a0a4b8; }
 .stSelectbox > div > div, .stSlider > div { background:#151821; color:#e7e7ea; border-radius:10px !important; }
 </style>
 """
-st.markdown(DARK_CSS if dark_mode else LIGHT_CSS, unsafe_allow_html=True)
+st.markdown(DARK_CSS, unsafe_allow_html=True)
+
+# Strong input theming (ensures readable text in all widgets)
+st.markdown("""
+<style>
+.stApp input:not([type="range"]), .stApp textarea,
+.stNumberInput input, .stTextInput input,
+.stDateInput input, .stTimeInput input,
+.stSelectbox [role="combobox"], .stSelectbox input,
+.stMultiSelect [role="combobox"] {
+  color: #e7e7ea !important;
+  background: #151821 !important;
+  border-color: #2a3150 !important;
+}
+.stSelectbox > div > div, .stMultiSelect > div > div {
+  color:#e7e7ea !important; background:#151821 !important; border-color:#2a3150 !important;
+}
+/* dropdown menu */
+.stSelectbox ul[role="listbox"] li, .stMultiSelect ul[role="listbox"] li {
+  color:#e7e7ea !important; background:#0f1115 !important;
+}
+/* labels & slider text */
+label, .stSlider label, .stSlider span { color:#e7e7ea !important; }
+/* placeholders */
+input::placeholder, textarea::placeholder { color:#a0a4b8 !important; opacity:1; }
+</style>
+""", unsafe_allow_html=True)
 # --- Strong input theming: readable in both light & dark (Codespaces-safe) ---
 if dark_mode:
     st.markdown("""
